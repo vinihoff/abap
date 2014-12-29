@@ -2,124 +2,67 @@
   DATA: comm_item_i TYPE komp.
   DATA: komv        TYPE komv.
   DATA: tkomv       TYPE TABLE OF komv.
-    
+
   DATA: tkomv2      TYPE TABLE OF komv.
   DATA: ykomv       TYPE TABLE OF komv.
-  
+
   DATA: l_maktx     TYPE makt-maktx.
 
-  comm_head_i-mandt      = sy-mandt.
-  comm_head_i-vkorg      = '1000'.
-  comm_head_i-vtweg      = '01'.
-  comm_head_i-spart      = '04'.
   comm_head_i-aland      = 'BR'.
-  comm_head_i-bukrs      = 'XXXX'.
+  comm_head_i-bukrs      = p_bukrs.
   comm_head_i-hwaer      = 'BRL'.
   comm_head_i-waerk      = 'BRL'.
-  comm_head_i-lifnr      = '0000000000'.
-  comm_head_i-zterm      = '0006'.
+  comm_head_i-lifnr      = '0000999999'.
+
   comm_head_i-kappl      = 'M'.
-  comm_head_i-kalsm      = 'XXXXXX'.
+  comm_head_i-kalsm      = 'ZXXXXX'.
   comm_head_i-prsdt      = '20141222'.
-  comm_head_i-fbuda      = '20141222'.
-  comm_head_i-erdat      = '20141222'.
-  comm_head_i-audat      = '20141222'.
-  comm_head_i-inco1      = 'CIF'.
-  comm_head_i-inco2      = 'XXXXXXX'.
-  comm_head_i-land1      = 'XX'.
-  comm_head_i-regio      = 'XX'.
-  comm_head_i-txjcd      = 'XX 1234567'.
-  comm_head_i-ekorg      = 'XXXX'.
-  comm_head_i-ekor1      = 'XXXX'.
-  comm_head_i-bstyp      = 'F'.
-  comm_head_i-bsart      = 'NB'.
-  comm_head_i-kvorg      = '03'.
-  comm_head_i-hland      = 'BR'.
-  comm_head_i-trtyp      = 'H'.
-  comm_head_i-vsbed      = '01'.
-  comm_head_i-brgew      = '0.500'.
-  comm_head_i-ntgew      = '0.500'.
-  comm_head_i-gewei      = 'KG'.
-  comm_head_i-ix_komk    =  1.
-  comm_head_i-ix_komt1_v =  1.
-  comm_head_i-ix_komt1_b = 59.
+
+  comm_head_i-land1      = 'BR'.
+  comm_head_i-regio      = 'PR'.
+  comm_head_i-ekorg      = p_ekorg.
 
   comm_item_i-kposn       = '000010'.
   comm_item_i-matnr       = p_matnr.
   comm_item_i-werks       = p_werks.
-  comm_item_i-wkreg       = 'PR'.
-  comm_item_i-ean11       = '1234567890000'.
-  comm_item_i-bwkey       = 1001.
-  comm_item_i-matkl       = '7212'.
-  comm_item_i-infnr       = '1234567890'.
+
   comm_item_i-no017       = 'X'.
   comm_item_i-taxil       = '0'.
   comm_item_i-taxir       = '0'.
   comm_item_i-esokz       = '0'.
   comm_item_i-pstyp       = '0'.
-  comm_item_i-pmatn       = p_matnr.
   comm_item_i-meins       = 'UND'.
-  comm_item_i-mglme       = 100.
-  comm_item_i-lagme       = 'UND'.
-  comm_item_i-lgumz       = 1.
-  comm_item_i-lgumn       = 1.
-  comm_item_i-mgame       = 100.
+  comm_item_i-mglme       = 1.
+  comm_item_i-mgame       = 1.
   comm_item_i-vrkme       = 'UND'.
-  comm_item_i-brgew       = 50.
-  comm_item_i-ntgew       = 50.
-  comm_item_i-gewei       = 'KG'.
-  comm_item_i-brtwr       = 10000.
-  comm_item_i-netwr       = 10000.
+
   comm_item_i-mwskz       = p_tax.
   comm_item_i-prsfd       = 'X'.
-  comm_item_i-netpr       =  100.
-  comm_item_i-kpein       =  1.
-  comm_item_i-kursk       =  1.
-  comm_item_i-bstme       = 'UND'.
-  comm_item_i-mtart       = 'HAWA'.
-  comm_item_i-kaend_typ   = '.....'.
-  comm_item_i-spart       = '04'.
-  comm_item_i-anz_tage    =  1.
-  comm_item_i-anz_monate  =  1.
-  comm_item_i-anz_wochen  =  1.
-  comm_item_i-anz_jahre   =  1.
-  comm_item_i-stf_tage    =  1.
-  comm_item_i-stf_monate  =  1.
-  comm_item_i-stf_wochen  =  1.
-  comm_item_i-stf_jahre   =  1.
-  comm_item_i-prctr       = 'CL123456'.
-  comm_item_i-ladgr       = '0001'.
-  comm_item_i-tragr       = '0004'.
-  comm_item_i-herkl       = 'BR'.
+  comm_item_i-netpr       =  305.
   comm_item_i-mtuse	      = '0'.
   comm_item_i-mtorg	      = '0'.
-  comm_item_i-steuc       = '99999999'.
-  comm_item_i-ix_komk     = 1.
+  comm_item_i-steuc       = '34021190'.
 
-  komv-mandt     = sy-mandt.
   komv-kposn     = '000010'.
   komv-stunr     = '001'.
   komv-zaehk     = '01'.
   komv-kappl     = 'M'.
   komv-kschl     = 'PB00'.
-  komv-kdatu     = '20141222'.
+  komv-kdatu     = sy-datum.
   komv-krech     = 'C'.
-  komv-kawrt     = 1000.
-  komv-kbetr     = 100.
+  komv-kawrt     = 10.
+  komv-kbetr     = 305.
   komv-waers     = 'BRL'.
-  komv-kkurs     = 1.
-  komv-kpein     = 1.
   komv-kmein     = 'UND'.
   komv-kumza     = 1.
   komv-kumne     = 1.
   komv-kntyp     = 'H'.
   komv-kherk     = 'A'.
   komv-kgrpe     = 'X'.
-  komv-kolnr     = 35.
-  komv-knumh     = '0009999999'.
-  komv-kopos     = 01.
-  komv-kwert     = 10000.
-  komv-ksteu     = 'A'.
+  komv-kmprs     = 'X'.
+
+  komv-kwert     = 100.
+  komv-ksteu     = 'C'.
   komv-koaid     = 'B'.
   komv-ix_komt1  =  1.
   komv-zaehk_ind = '01'.
@@ -130,11 +73,11 @@
   komv-kaend_ufk = 'X'.
 
   APPEND komv TO tkomv.
-  
+
 **********************************************************************
 * This FM determines and returns only the conditions with a defined
 * Condition Type (KSCHL) of a Procedure (KALSM).
-* TCODE M/08 is used for defining and checking those.  
+* TCODE M/08 is used for defining and checking those.
 **********************************************************************
   CALL FUNCTION 'PRICING'
     EXPORTING
@@ -142,49 +85,50 @@
       comm_head_i      = comm_head_i
       comm_item_i      = comm_item_i
     TABLES
-      tkomv            = tkomv.    
- 
+      tkomv            = tkomv.
+
 **********************************************************************
-* Sometimes there is the need to show the determined group of 
+* Sometimes there is the need to show the determined group of
 * conditions. SAP uses the following FM to generate a screen
 * with all the information needed, as if you were seeing a detailed
 * information on a PO, or Nota Fiscal.
 *
 * The parameters of Pricing FM are enough to make this other FM work
-**********************************************************************      
-  SELECT SINGLE maktx 
-    FROM makt 
+**********************************************************************
+  SELECT SINGLE maktx
+    FROM makt
     INTO l_maktx
-   WHERE matnr eq p_matnr
-     AND spras eq sy-langu.  
-  
+   WHERE matnr EQ p_matnr
+     AND spras EQ sy-langu.
+
   CALL FUNCTION 'PRICING_SCREEN'
     EXPORTING
-      comm_head_i            = comm_head_i
-      comm_item_i            = comm_item_i
-      display_only           = 'X'
-      material_text          = l_maktx
+      comm_head_i   = comm_head_i
+      comm_item_i   = comm_item_i
+      display_only  = 'X'
+      material_text = l_maktx
     TABLES
-      tkomv                  = tkomv.
-  
+      tkomv         = tkomv.
+
+
   tkomv2 = tkomv.
- 
+
 **********************************************************************
-* For a number of reasons we may need to get all the conditions of a 
-* Procedure, including the ones without a defined Condition Type (KSCHL)   
+* For a number of reasons we may need to get all the conditions of a
+* Procedure, including the ones without a defined Condition Type (KSCHL)
 * To do this we must use the following FM, the parameters are the same
 * of Pricing FM, and the desired result will be on YKOMV table.
-* 
-* A important note is that tkomv2 have the result of the first 
-* execution of Pricing FM.                                                                                                             
-********************************************************************** 
+*
+* A important note is that tkomv2 have the result of the first
+* execution of Pricing FM.
+**********************************************************************
   CALL FUNCTION 'PRICING_SUBSCREEN_PBO'
     EXPORTING
-      comm_head_i         = comm_head_i
-      comm_item_i         = comm_item_i      
+      comm_head_i = comm_head_i
+      comm_item_i = comm_item_i
     TABLES
-      tkomv               = tkomv2
-      ykomv               = ykomv
-   EXCEPTIONS
-     error               = 1
-     OTHERS              = 2.
+      tkomv       = tkomv2
+      ykomv       = ykomv
+    EXCEPTIONS
+      error       = 1
+      OTHERS      = 2.
