@@ -1,0 +1,114 @@
+  DATA: comm_head_i TYPE komk.
+  DATA: comm_item_i TYPE komp.
+  DATA: komv        TYPE komv.
+  DATA: tkomv       TYPE TABLE OF komv.
+
+  DATA: tkomv2      TYPE TABLE OF komv.
+  DATA: ykomv       TYPE TABLE OF komv.
+
+  DATA: l_maktx     TYPE makt-maktx.
+
+  comm_head_i-aland      = 'BR'.
+  comm_head_i-bukrs      = P_BUKRS.
+  comm_head_i-hwaer      = 'BRL'.
+  comm_head_i-waerk      = 'BRL'.
+  comm_head_i-prsdt      = sy-datum.
+  comm_head_i-land1      = 'BR'.
+  comm_head_i-regio      = 'PR'.
+
+  comm_head_i-kappl      = 'V'.
+  comm_head_i-kalsm      = 'XXXXXXX'.
+  comm_head_i-kunnr      = '0000999999'.
+  comm_head_i-vkorg      = '1000'.
+  comm_head_i-vtweg      = '01'.
+  comm_head_i-spart      = '04'.
+  comm_head_i-vkbur      = '0401'.
+  comm_head_i-bukrs      = P_BUKRS
+  comm_head_i-auart      = 'XXXX'.
+  comm_head_i-werks      = '1001'.
+  comm_head_i-ktokd      = 'PJUR'.
+  comm_head_i-kunnr_tx   = '0000999999'.
+  comm_head_i-taxk1      = 1.
+
+  comm_item_i-kposn       = '000010'.
+  comm_item_i-matnr       = p_matnr.
+  comm_item_i-pmatn       = p_matnr.
+  comm_item_i-werks       = p_werks.
+  comm_item_i-meins       = 'UND'.
+  comm_item_i-mglme       = 1.
+  comm_item_i-mgame       = 1.
+  comm_item_i-vrkme       = 'UND'.
+  comm_item_i-prsfd       = 'X'.
+  comm_item_i-evrwr       = 'X'.
+  comm_item_i-taxm1       = '1'.
+  comm_item_i-j_1btxsdc	  = p_tax.
+  comm_item_i-mtuse	      =	'1'.
+  comm_item_i-mtorg	      =	'0'.
+  comm_item_i-matkl       = '7220'.
+  comm_item_i-txreg_sf    = 'PR'.
+  comm_item_i-txreg_st    = 'PR'.
+
+  SELECT SINGLE steuc
+    FROM marc
+    INTO comm_item_i-steuc
+   WHERE matnr EQ p_matnr
+     AND werks EQ p_werks.
+
+**********************************************************************
+* This FM determines and returns only the conditions with a defined
+* Condition Type (KSCHL) of a Procedure (KALSM).
+* TCODE M/08 is used for defining and checking those.
+**********************************************************************
+  CALL FUNCTION 'PRICING'
+    EXPORTING
+      calculation_type = 'C'
+      comm_head_i      = comm_head_i
+      comm_item_i      = comm_item_i
+    TABLES
+      tkomv            = tkomv.
+
+**********************************************************************
+* Sometimes there is the need to show the determined group of
+* conditions. SAP uses the following FM to generate a screen
+* with all the information needed, as if you were seeing a detailed
+* information on a PO, or Nota Fiscal.
+*
+* The parameters of Pricing FM are enough to make this other FM work
+**********************************************************************
+  SELECT SINGLE maktx
+    FROM makt
+    INTO l_maktx
+   WHERE matnr EQ p_matnr
+     AND spras EQ sy-langu.
+
+  CALL FUNCTION 'PRICING_SCREEN'
+    EXPORTING
+      comm_head_i   = comm_head_i
+      comm_item_i   = comm_item_i
+      display_only  = 'X'
+      material_text = l_maktx
+    TABLES
+      tkomv         = tkomv.
+
+
+  tkomv2 = tkomv.
+
+**********************************************************************
+* For a number of reasons we may need to get all the conditions of a
+* Procedure, including the ones without a defined Condition Type (KSCHL)
+* To do this we must use the following FM, the parameters are the same
+* of Pricing FM, and the desired result will be on YKOMV table.
+*
+* A important note is that tkomv2 have the result of the first
+* execution of Pricing FM.
+**********************************************************************
+  CALL FUNCTION 'PRICING_SUBSCREEN_PBO'
+    EXPORTING
+      comm_head_i = comm_head_i
+      comm_item_i = comm_item_i
+    TABLES
+      tkomv       = tkomv2
+      ykomv       = ykomv
+    EXCEPTIONS
+      error       = 1
+      OTHERS      = 2.
